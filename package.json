@@ -1,0 +1,16 @@
+{
+  "name": "BlindApp",
+  "version": "0.0.0",
+  "description": "Aplicación para personas no videntes",
+  "main": "index.js",
+  "platforms": [
+    "android@5.1.1"
+  ],
+"plugins": [
+    "cordova-plugin-device@1.0.1",
+    "cordova-plugin-console@1.0.1",
+    "cordova-plugin-whitelist@1.0.0",
+    "cordova-plugin-bluetooth-serial@0.4.6",
+    "cordova-plugin-tts@0.2.3"
+  ]
+}
