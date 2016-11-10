@@ -35,11 +35,11 @@ var app = {
     onDeviceReady: function() {
         mensaje.innerHTML="Desconectado";
 
-  /*    bluetoothSerial.connect(
+     bluetoothSerial.connect(
                     app.macAddress,  // device to connect to
                     app.openPort,    // start listening if you succeed
                     app.showError    // show the error if you fail
-                );*/
+                );
     }, 
 /*
     Connects if not connected, and disconnects if connected:
@@ -84,12 +84,9 @@ manageConnection: function() {
                 app.showError      // show the error if you fail
              );
         };
-        if (state=="disconnected"){state="connected";mensaje.innerHTML="Conectado";
-}
-        else {state="disconnected";        mensaje.innerHTML="Desconectado";
-}
+       
         //here's the real action of the manageConnection function:
-        //bluetoothSerial.isConnected(disconnect, connect);
+        bluetoothSerial.isConnected(disconnect, connect);
     },
   
 /*
@@ -97,6 +94,7 @@ manageConnection: function() {
     and changes the button:
 */
      openPort: function() {
+      state="connected";mensaje.innerHTML="Conectado";
       mensaje.innerHTML="Conectado";
          TTS.speak({
            text: "Conectado",
@@ -134,6 +132,7 @@ manageConnection: function() {
        }, function (reason) {
            // Handle the error case
        });
+         state="disconnected";        mensaje.innerHTML="Desconectado";
         // unsubscribe from listening:
         bluetoothSerial.unsubscribe(
                 function (data) {

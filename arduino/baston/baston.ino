@@ -11,7 +11,7 @@ String metro=" metros";
 int decena, centena;
 void setup(){
   Serial.begin(9600);
-  //bluetooth.begin(9600); 
+  bluetooth.begin(9600); 
   pinMode(pinOutPWM, OUTPUT);
   /*Primer sensor*/
   pinMode(9, OUTPUT); /*activación del pin 9 como salida: para el pulso ultrasónico TRIG*/
@@ -36,17 +36,18 @@ void loop(){
   if ((distancia_enfrente!=distancia_enfrente_ant)&&(distancia_enfrente > 3) && (distancia_enfrente < 300) && (distancia_enfrente%5==0)){
     distancia_enfrente_ant=distancia_enfrente;
     if (distancia_enfrente<100){
-      analogWrite(pinOutPWM, 255);
-      Serial.println(enfrente +distancia_enfrente+ cm);
+     // analogWrite(pinOutPWM, 255);
+           Serial.println(enfrente +distancia_enfrente+ cm);
+      bluetooth.println(enfrente +distancia_enfrente+ cm);
 
     }
     else{
-       analogWrite(pinOutPWM, 127);
+      // analogWrite(pinOutPWM, 127);
        decena=distancia_enfrente%100;
        centena=distancia_enfrente/100;
       //distancia=distancia/100;
+      bluetooth.println(enfrente +centena+','+decena+ metro);
       Serial.println(enfrente +centena+','+decena+ metro);
-      
       }
     }
  // bluetooth.println("holas");
@@ -68,13 +69,15 @@ void loop(){
       distancia_arriba_ant=distancia_arriba;
       if (distancia_arriba<100){
         bluetooth.println(arriba +distancia_arriba+ cm);
+        Serial.println(arriba +distancia_arriba+ cm);
       }
         else{
           decena=distancia_arriba%100;
           centena=distancia_arriba/100;
           //distancia2=distancia2/100;
           bluetooth.println(arriba +centena+','+decena+ metro);
-          }
+    Serial.println(arriba +centena+','+decena+ metro);
+            }
 
   }
      // bluetooth.println("holas");
