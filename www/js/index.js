@@ -1,10 +1,7 @@
-/*
-    SimpleSerial index.js
-    Created 7 May 2013
-    Modified 9 May 2013
-    by Tom Igoe
-*/
-
+/*Servidor y requests posibles*/
+var API= "https://serverblindapp.herokuapp.com/";
+// API+user/create => envío por GET la mac del usuario y lo crea
+// API+smart_point/create => envío por GET los datos del beacon y la mac del usuario
 var state="disconnected";
 var mensaje=document.getElementById("message");
 var app = {
@@ -28,23 +25,71 @@ var app = {
       },
 
     
-
+ 
 /*
     this runs when the device is ready for user interaction:
 */
     onDeviceReady: function() {
         mensaje.innerHTML="Desconectado";
+        console.log("usuario registrado ? "+localStorage.usuarioRegistrado); 
+       // if(localStorage.usuarioRegistrado==false){ //Si no está registrado en el servidor, o así lo dice el LocalStorage
+          /*  cordovaHTTP.get(API+"user/create", {  //Envía por GET su macAddress, si no esta registrado lo hace sino no pasa nada
+              macaddress: app.macAddress
+          }, { }, function(response) {
+              // prints 200
+              localStorage.usuarioRegistrado=true;
+              console.log(response.status);
+              console.log(JSON.stringify(response));
+          }, function(response) {
+              // prints 403
+              console.log(response.status);
 
-     bluetoothSerial.connect(
+              //prints Permission denied 
+              console.log(response.error);
+          });*/
+       // }
+      /* cordovaHTTP.get(API+"smart_point/create", {  //Envía por GET su macAddress, si no esta registrado lo hace sino no pasa nada
+              macaddress: app.macAddress
+          }, { }, function(response) {
+              // prints 200
+              localStorage.usuarioRegistrado=true;
+              console.log(response.status);
+              console.log(JSON.stringify(response));
+          }, function(response) {
+              // prints 403
+              console.log(response.status);
+
+              //prints Permission denied 
+              console.log(response.error);
+          });*/
+       // }
+       cordovaHTTP.get(API+"smart_point/create/", {  
+              macaddress: '000:000:000:000', //macaddress del smartpoint
+              name: "value", 
+              lat: "2342342",
+              long: "4444444",
+              user_mac: app.macAddress,
+              
+          }, { }, function(response) {
+              // prints 200
+              console.log("smart point "+ JSON.stringify(response));
+              console.log("status smart point "+response.status);
+          }, function(response) {
+              // prints 403
+              console.log("error "+JSON.stringify(response));
+
+              //prints Permission denied 
+          });
+     /*bluetoothSerial.connect(
                     app.macAddress,  // device to connect to
                     app.openPort,    // start listening if you succeed
                     app.showError    // show the error if you fail
-                );
-    }, 
+                );*/ 
+    },
 /*
     Connects if not connected, and disconnects if connected:
 */
-
+   
 manageConnection: function() {
 
         // connect() will get called only if isConnected() (below)
