@@ -37,7 +37,7 @@ void loop(){
   deja de hacerlo, LOW, la longitud del pulso entrante*/
   distancia_enfrente= int(0.017*tiempo); /*fórmula para calcular la distancia obteniendo un valor entero*/
   /*Monitorización en centímetros por el monitor serial*/
-  //La distancia se envia cuando es multiplo de 10
+  //La distancia se envia cuando es multiplo de 5
   
   if ((distancia_enfrente!=distancia_enfrente_ant)&&(distancia_enfrente > 3) && (distancia_enfrente < 100) && (distancia_enfrente%5==0)){
     distancia_enfrente_ant=distancia_enfrente;
@@ -59,11 +59,14 @@ void loop(){
     analogWrite(pinOutPWM, velocidad);
     Serial.println(enfrente +distancia_enfrente+ cm);
     bluetooth.println(enfrente +distancia_enfrente+ cm);
-   }
+   
+   }else if (distancia_enfrente!=distancia_enfrente_ant){
+     analogWrite(pinOutPWM, 0);
+  }
   
-  digitalWrite(5,LOW); /* Por cuestión de estabilización del sensor*/
+  digitalWrite(5,LOW); /* Por cuesti�n de estabilizacion del sensor*/
   delayMicroseconds(5);
-  digitalWrite(5, HIGH); /* envío del pulso ultrasónico*/
+  digitalWrite(5, HIGH); /* env�o del pulso ultrasonico*/
   delayMicroseconds(10);
   tiempo2=pulseIn(4, HIGH); /* Función para medir la longitud del pulso entrante. Mide el tiempo que transcurrido entre el envío
   del pulso ultrasónico y cuando el sensor recibe el rebote, es decir: desde que el pin 12 empieza a recibir el rebote, HIGH, hasta que
@@ -77,7 +80,6 @@ void loop(){
       bluetooth.println(arriba +distancia_arriba+ cm);
       Serial.println(arriba +distancia_arriba+ cm);
   }
-     // bluetooth.println("holas");
+     
   delay(500);
 }
-  
