@@ -20,7 +20,7 @@ var app = {
 */
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        window.onclick = this.manageConnection;
+        window.onclick = app.manageConnection;
 
       },
 
@@ -63,7 +63,7 @@ var app = {
               console.log(response.error);
           });*/
        // }
-       cordovaHTTP.get(API+"smart_point/create/", {  
+      /* cordovaHTTP.get(API+"smart_point/create/", {  
               macaddress: '000:000:000:000', //macaddress del smartpoint
               name: "value", 
               lat: "2342342",
@@ -79,12 +79,12 @@ var app = {
               console.log("error "+JSON.stringify(response));
 
               //prints Permission denied 
-          });
-     /*bluetoothSerial.connect(
+          });*/
+     bluetoothSerial.connect(
                     app.macAddress,  // device to connect to
                     app.openPort,    // start listening if you succeed
                     app.showError    // show the error if you fail
-                );*/ 
+                );
     },
 /*
     Connects if not connected, and disconnects if connected:
